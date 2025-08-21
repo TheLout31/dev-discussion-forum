@@ -31,7 +31,7 @@ PostRouter.get("/", authMiddleware("User"), async (req, res) => {
   const userId = req.user;
   
   try {
-    const posts = await postModel.find({ author:userId });
+    const posts = await postModel.find({ author:userId }).populate({path:"author" , select:"_id name email role"});
     res.status(201).json({ message: "List of Posts", posts });
   } catch (error) {
     res
